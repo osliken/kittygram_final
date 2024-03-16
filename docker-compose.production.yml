@@ -13,7 +13,7 @@ services:
       - pg_data:/var/lib/postgresql/data
 
   backend:
-    build: ./backend/
+    image: osliken/kittygram_backend
     env_file: .env
     volumes:
       - static:/static
@@ -22,8 +22,8 @@ services:
       - db
 
   frontend:
+    image: osliken/kittygram_frontend
     env_file: .env
-    build: ./frontend/
     command: cp -r /app/build/. /static/
     volumes:
       - static:/static
@@ -31,7 +31,7 @@ services:
       - backend
 
   gateway:
-    build: ./nginx/
+    image: osliken/kittygram_gateway
     env_file: .env
     ports:
       - 9000:80
