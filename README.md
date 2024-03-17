@@ -45,6 +45,8 @@
     DB_HOST=db
     DB_PORT=5432
     SECRET_KEY=<ключ Django>
+    DEBUG=<True/False>
+    ALLOWED_HOSTS=<localhost kittygram.ru>
     ```
 - Запустите Docker compose
 
