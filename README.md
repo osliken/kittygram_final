@@ -1,26 +1,67 @@
-#  Как работать с репозиторием финального задания
+[![Main Kittygram workflow](https://github.com/osliken/kittygram_final/actions/workflows/main.yml/badge.svg)](https://github.com/osliken/kittygram_final/actions/workflows/main.yml)
 
-## Что нужно сделать
+# Kittygram - блог для размещения фотографий котиков.
 
-Настроить запуск проекта Kittygram в контейнерах и CI/CD с помощью GitHub Actions
+## Описание проекта: 
 
-## Как проверить работу с помощью автотестов
+В проекте Kittygram пользователи могут делиться фотографиями котиков. Зарегистрированные пользователи могут создавать, удалять, редактировать свои записи.
 
-В корне репозитория создайте файл tests.yml со следующим содержимым:
-```yaml
-repo_owner: ваш_логин_на_гитхабе
-kittygram_domain: полная ссылка (https://доменное_имя) на ваш проект Kittygram
-taski_domain: полная ссылка (https://доменное_имя) на ваш проект Taski
-dockerhub_username: ваш_логин_на_докерхабе
-```
+## Ссылка на приложение в сети:
 
-Скопируйте содержимое файла `.github/workflows/main.yml` в файл `kittygram_workflow.yml` в корневой директории проекта.
+[https://osliken.ru/](https://osliken.ru/)
 
-Для локального запуска тестов создайте виртуальное окружение, установите в него зависимости из backend/requirements.txt и запустите в корневой директории проекта `pytest`.
 
-## Чек-лист для проверки перед отправкой задания
+## Стэк проекта:
 
-- Проект Taski доступен по доменному имени, указанному в `tests.yml`.
-- Проект Kittygram доступен по доменному имени, указанному в `tests.yml`.
-- Пуш в ветку main запускает тестирование и деплой Kittygram, а после успешного деплоя вам приходит сообщение в телеграм.
-- В корне проекта есть файл `kittygram_workflow.yml`.
+- Git
+- Docker
+- Postgres
+- Python 3.x
+- Node.js 9.x.x
+- Gunicorn
+- Nginx
+- Django
+- React
+
+## Как развернуть проект:
+
+- Клонироуйте репозиторий:
+
+    ```bash
+    git clone git@github.com:osliken/kittygram_final.git
+    ```
+- Создайте файл .env
+
+    ```bash
+    touch .env
+    ```
+- Добавьте в файл .env переменные окружения:
+
+    ```bash
+    POSTGRES_USER=<имя пользователя>
+    POSTGRES_PASSWORD=<пароль>
+    POSTGRES_DB=<база данных>
+    DB_NAME=<имя базы данных>
+    DB_HOST=db
+    DB_PORT=5432
+    SECRET_KEY=<ключ Django>
+    ```
+- Запустите Docker compose
+
+    ```bash
+    sudo docker compose -f docker-compose.yml up -d
+    ```
+- Сделайте миграции и соберите статику
+
+    ```bash
+    sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
+    sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
+    sudo docker compose -f docker-compose.production.yml exec backend mkdir -p /backend_static/static/
+    sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /static/static/
+    ```
+
+
+
+## Автор
+
+- Петров Сергей - [GitHub](https://github.com/osliken)
